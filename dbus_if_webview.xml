@@ -1,0 +1,15 @@
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN" "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node>
+  <interface name="local.DBUS_Interface_WebView">
+    <property name="URL" type="s" access="readwrite"/>
+    <signal name="urlChanged">
+      <arg type="s" direction="out"/>
+    </signal>
+    <method name="goForward">
+    </method>
+    <method name="goBack">
+    </method>
+    <method name="reload">
+    </method>
+  </interface>
+</node>

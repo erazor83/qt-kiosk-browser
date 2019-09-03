@@ -22,3 +22,15 @@ void Browser::restart()
     else
         QProcess::startDetached("systemctl", QStringList() << "restart" << "qt-kiosk-browser");
 }
+
+BrowserOptions::BrowserOptions(QObject *parent): QObject(parent)
+{
+}
+
+QString BrowserOptions::_r_configFile() const {
+    return configFile;
+}
+    
+QString BrowserOptions::_r_forceURL() const {
+    return forceURL;
+}

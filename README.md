@@ -12,11 +12,27 @@ Below is a screenshot of it showing the Qt website:
     <img align="center" src="screenshot.png" height="480px"/>
 </p>
 
+## Features
+Enable runtime feature when calling qmake:
+
+### enable D-Bus interface
+```
+  # qmake "CONFIG+=dbus" .
+```
+
 ## Settings
 
 The settings file must be a JSON file.
 
 ### Available settings
+
+#### vkeyboardLocale
+
+Set the locale for the vertial keyboard.
+
+#### ignoreInvalidSSL
+
+Ignore invalid SSL certificates.
 
 #### ScreenSaverTimeout
 
@@ -42,9 +58,37 @@ Example:
 {
     "ScreenSaverTimeout": 10000,
     "RestartTimeout": 2000,
+    "ignoreInvalidSSL": true,
 
     "WebEngineSettings": {
         "javascriptEnabled": false
     }
 }
+```
+
+### D-Bus interface
+```
+  > qdbus io.qt.kiosk-browser
+/
+/Screensaver
+/WebView
+
+  > qdbus io.qt.kiosk-browser /WebView
+property readwrite QString local.DBUS_Interface_WebView.URL
+signal void local.DBUS_Interface_WebView.urlChanged(QString)
+method void local.DBUS_Interface_WebView.goBack()
+method void local.DBUS_Interface_WebView.goForward()
+method void local.DBUS_Interface_WebView.reload()
+signal void org.freedesktop.DBus.Properties.PropertiesChanged(QString interface_name, QVariantMap changed_properties, QStringList invalidated_properties)
+method QDBusVariant org.freedesktop.DBus.Properties.Get(QString interface_name, QString property_name)
+method QVariantMap org.freedesktop.DBus.Properties.GetAll(QString interface_name)
+method void org.freedesktop.DBus.Properties.Set(QString interface_name, QString property_name, QDBusVariant value)
+method QString org.freedesktop.DBus.Introspectable.Introspect()
+method QString org.freedesktop.DBus.Peer.GetMachineId()
+method void org.freedesktop.DBus.Peer.Ping()
+
+  > qdbus io.qt.kiosk-browser /WebView org.freedesktop.DBus.Properties.Set local.DBUS_Interface_WebView URL "http://google.de"
+  
+  > qdbus io.qt.kiosk-browser /WebView org.freedesktop.DBus.Properties.Get local.DBUS_Interface_WebView URL
+https://www.google.de/
 ```
