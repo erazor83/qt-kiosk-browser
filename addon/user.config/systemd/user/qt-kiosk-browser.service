@@ -1,0 +1,34 @@
+[Unit]
+Description=Qt Kiosk Browser
+DefaultDependencies=no
+Conflicts=getty@tty1.service
+Wants=dev-input-tslib.device dbus.service
+After=systemd-user-sessions.service dev-input-tslib.device systemd-networkd-wait-online.service
+
+[Service]
+#Type=dbus
+#BusName=io.qt.kiosk-browser
+#User=kiosk
+#Environment=QT_QPA_EGLFS_DEBUG=qt.qpa.input
+#Environment=QT_QPA_EGLFS_NO_LIBINPUT=1
+#Environment=QT_QPA_EGLFS_DISABLE_INPUT=1
+Environment=QT_QPA_EGLFS_TSLIB=1
+#Environment=QT_QPA_GENERIC_PLUGINS=evdevtouch,evdevmouse,evdevkeyboard
+#Environment=QT_QPA_GENERIC_PLUGINS=libinput
+Environment=QT_QPA_EGLFS_PHYSICAL_WIDTH=1920
+Environment=QT_QPA_EGLFS_PHYSICAL_HEIGHT=1080
+Environment=TSLIB_CONFFILE=/etc/ts.conf
+Environment=TSLIB_TSDEVICE=/dev/input/tslib
+Environment=TSLIB_TSEVENTTYPE=INPUT
+Environment=TSLIB_CALIBFILE=/etc/pointercal
+#Environment=DBUS_SESSION_BUS_ADDRESS="unix:path=/var/run/dbus/system_bus_socket"
+
+ExecStart=/usr/bin/qt-kiosk-browser -platform eglfs -plugin tslib /etc/qt-kiosk-browser.conf
+#ExecStart=/usr/bin/qt-kiosk-browser -platform eglfs /etc/qt-kiosk-browser.conf
+Restart=always
+PrivateTmp=true
+NoNewPrivileges=true
+
+[Install]
+#Alias=display-manager.service
+WantedBy=default.target

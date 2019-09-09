@@ -89,12 +89,17 @@ int main(int argc, char *argv[])
     DBUS_Interface_ScreenSaver*  pDBUS_Interface_ScreenSaver = new DBUS_Interface_ScreenSaver(&engine);
     
     // Create interface adaptor
-    DBUS_Interface_WebViewAdaptor* cDBUS_Interface_WebViewAdaptor = new DBUS_Interface_WebViewAdaptor(pDBUS_Interface_WebView);
+    //DBUS_Interface_WebViewAdaptor* cDBUS_Interface_WebViewAdaptor = new DBUS_Interface_WebViewAdaptor(pDBUS_Interface_WebView);
 
-    DBUS_Interface_ScreenSaverAdaptor* cDBUS_Interface_ScreenSaverAdaptor = new DBUS_Interface_ScreenSaverAdaptor(pDBUS_Interface_ScreenSaver);
+    //DBUS_Interface_ScreenSaverAdaptor* cDBUS_Interface_ScreenSaverAdaptor = new DBUS_Interface_ScreenSaverAdaptor(pDBUS_Interface_ScreenSaver);
 
     // Connect to session bus
+    #ifdef DBUS_USE_SYSTEMBUS
+    #warning DBUS_USE_SYSTEMBUS is set
+    QDBusConnection connection = QDBusConnection::systemBus();
+    #else
     QDBusConnection connection = QDBusConnection::sessionBus();
+    #endif
     connection.registerObject("/WebView", pDBUS_Interface_WebView);
     connection.registerObject("/Screensaver", pDBUS_Interface_ScreenSaver);
     connection.registerService("io.qt.kiosk-browser");
