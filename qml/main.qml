@@ -52,6 +52,13 @@ Window {
                             restartTimer.interval = parseInt(settings["RestartTimeout"])
                         }
 
+                        if (typeof settings["UrlTimeout"] != "undefined") {
+                            urlTimer.interval = parseInt(settings["UrlTimeout"])
+                        }
+                        if (typeof settings["UrlTimeoutUrl"] != "undefined") {
+                            urlTimer.url = settings["UrlTimeoutUrl"]
+                        }
+
                         if (typeof browserOptions.forceURL != "undfined") {
                             
                         } else if (typeof settings["URL"] != "undefined") {
@@ -210,6 +217,7 @@ Window {
     InputEventHandler {
         onTriggered: {
             screenSaverTimer.restart()
+            urlTimer.restart()
         }
     }
 
@@ -232,6 +240,7 @@ Window {
 
     Timer {
         id: restartTimer
+        
         interval: 60000 * 3 // 3 minutes
         repeat: false
 
@@ -241,4 +250,27 @@ Window {
             this.running = this.interval > 0
         }
     }
+    
+    Timer {
+        id: urlTimer
+
+        interval: 60000 * 3 // 3 minutes
+        running: interval > 0
+        repeat: false
+        
+        property string url: null
+
+        onTriggered: {
+            //console.log("urlTimeout: "+this.url)
+            if (this.url) {
+                webView.url=this.url
+            }
+           urlTimer.restart()
+        }
+
+        function start() {
+            this.running = this.interval > 0
+        }
+    }
+
 }
