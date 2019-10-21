@@ -46,6 +46,14 @@ After entering in screen saving mode, restart browser after X milliseconds (0 to
 
 Defaults to 3 minutes
 
+#### UrlTimeout & UrlTimeoutUrl
+
+Navigate to URL UrlTimeoutUrl after UrlTimeout milliseconds of inactivity (disabled by default).
+
+#### JsTimeout & JsTimeoutCmd
+
+Call Javascript-code JsTimeoutCmd after JsTimeout milliseconds of inactivity (disabled by default).
+
 #### WebEngineSettings
 
 Configure browser properties and generic attributes, such as JavaScript support, focus behavior, and access to remote content.
@@ -57,8 +65,12 @@ Example:
 ```json
 {
     "ScreenSaverTimeout": 10000,
-    "RestartTimeout": 2000,
-    "ignoreInvalidSSL": true,
+    "RestartTimeout":     2000,
+    "UrlTimeout":         10000,
+    "UrlTimeoutUrl":      "http://google.de",
+    "JsTimeout":          "5000",
+    "JsTimeoutCmd":       "window.history.back()",
+    "ignoreInvalidSSL":    true,
 
     "WebEngineSettings": {
         "javascriptEnabled": false
