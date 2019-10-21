@@ -58,6 +58,14 @@ Window {
                         if (typeof settings["UrlTimeoutUrl"] != "undefined") {
                             urlTimer.url = settings["UrlTimeoutUrl"]
                         }
+                        
+                        if (typeof settings["JsTimeout"] != "undefined") {
+                            jsTimer.interval = parseInt(settings["JsTimeout"])
+                        }
+                        if (typeof settings["JsTimeoutCmd"] != "undefined") {
+                            jsTimer.jsCommand = settings["JsTimeoutCmd"]
+                        }
+
 
                         if (typeof browserOptions.forceURL != "undfined") {
                             
@@ -218,6 +226,7 @@ Window {
         onTriggered: {
             screenSaverTimer.restart()
             urlTimer.restart()
+            jsTimer.restart()
         }
     }
 
@@ -273,4 +282,29 @@ Window {
         }
     }
 
+    Timer {
+        id: jsTimer
+
+        interval: 60000 * 3 // 3 minutes
+        running: interval > 0
+        repeat: false
+        
+        property string jsCommand: null
+
+        onTriggered: {
+            if (this.jsCommand) {
+                webView.runJavaScript(
+                    this.jsCommand,
+                    function(result) {
+                        console.log(jsTimer.jsCommand+" | result: "+result)
+                    }
+                )
+            }
+           jsTimer.restart()
+        }
+
+        function start() {
+            this.running = this.interval > 0
+        }
+    }
 }
