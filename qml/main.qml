@@ -67,7 +67,7 @@ Window {
                         }
 
 
-                        if (typeof browserOptions.forceURL != "undfined") {
+                        if (browserOptions.forceURL != "") {
                             
                         } else if (typeof settings["URL"] != "undefined") {
                             webView.url = settings["URL"]
@@ -270,7 +270,8 @@ Window {
         property string url: null
 
         onTriggered: {
-            //console.log("urlTimeout: "+this.url)
+            console.error("urlTimer.onTriggered")
+
             if (this.url) {
                 webView.url=this.url
             }
@@ -292,6 +293,8 @@ Window {
         property string jsCommand: null
 
         onTriggered: {
+            console.error("jsTimer.onTriggered")
+
             if (this.jsCommand) {
                 webView.runJavaScript(
                     this.jsCommand,
