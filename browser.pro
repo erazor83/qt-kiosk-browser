@@ -1,5 +1,7 @@
 TEMPLATE = app
 
+DEFINES += APP_VERSION=\\\"1.2\\\"
+
 QT += qml quick core gui webengine webenginewidgets
 
 contains(CONFIG,"dbus") {
@@ -19,12 +21,12 @@ contains(CONFIG,"dbus-systembus") {
   #webview.header_flags = -lFoo
   #webview.source_flags = -lFoo
 
-  DBUS_INTERFACES += dbus_if_webview.xml dbus_if_screensaver.xml
-  DBUS_ADAPTORS += dbus_if_webview.xml dbus_if_screensaver.xml
+  DBUS_INTERFACES += dbus_if_browser.xml dbus_if_webview.xml dbus_if_screensaver.xml
+  DBUS_ADAPTORS += dbus_if_browser.xml dbus_if_webview.xml dbus_if_screensaver.xml
 
   
-  HEADERS += dbus_if_screensaver.h dbus_if_webview.h
-  SOURCES += dbus_if_screensaver.cpp dbus_if_webview.cpp
+  HEADERS += dbus_if_screensaver.h dbus_if_webview.h dbus_if_browser.h
+  SOURCES += dbus_if_screensaver.cpp dbus_if_webview.cpp dbus_if_browser.cpp
 
   #SOURCES += dbus_if_screensaver_adaptor.cpp dbus_if_webview_adaptor.cpp
   #SOURCES += dbus_if_screensaver_interface.cpp dbus_if_webview_interface.cpp

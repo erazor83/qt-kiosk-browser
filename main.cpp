@@ -18,6 +18,10 @@
 #include "browser.hpp"
 
 #ifdef ENABLE_DBUS
+#include "dbus_if_browser.h"
+#include "dbus_if_browser_interface.h"
+#include "dbus_if_browser_adaptor.h"
+
 #include "dbus_if_webview.h"
 #include "dbus_if_webview_interface.h"
 #include "dbus_if_webview_adaptor.h"
@@ -31,7 +35,6 @@
 #include "fifo_reader.h"
 #endif
 
-
 int main(int argc, char *argv[])
 {
     qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
@@ -39,7 +42,7 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
     QCoreApplication::setApplicationName("qt fullscreen browser");
-    QCoreApplication::setApplicationVersion("1.0");
+    QCoreApplication::setApplicationVersion(APP_VERSION);
 
     QCommandLineParser arg_parser;
     arg_parser.addHelpOption();
@@ -85,6 +88,7 @@ int main(int argc, char *argv[])
         return -1;
     
 #ifdef ENABLE_DBUS
+    DBUS_Interface_Browser*  pDBUS_Interface_Browser = new DBUS_Interface_Browser(&engine);
     DBUS_Interface_WebView*  pDBUS_Interface_WebView = new DBUS_Interface_WebView(&engine);
     DBUS_Interface_ScreenSaver*  pDBUS_Interface_ScreenSaver = new DBUS_Interface_ScreenSaver(&engine);
     
@@ -100,6 +104,7 @@ int main(int argc, char *argv[])
     #else
     QDBusConnection connection = QDBusConnection::sessionBus();
     #endif
+    connection.registerObject("/Browser", pDBUS_Interface_Browser);
     connection.registerObject("/WebView", pDBUS_Interface_WebView);
     connection.registerObject("/Screensaver", pDBUS_Interface_ScreenSaver);
     connection.registerService("io.qt.kiosk-browser");
