@@ -93,9 +93,9 @@ int main(int argc, char *argv[])
     DBUS_Interface_ScreenSaver*  pDBUS_Interface_ScreenSaver = new DBUS_Interface_ScreenSaver(&engine);
     
     // Create interface adaptor
-    //DBUS_Interface_WebViewAdaptor* cDBUS_Interface_WebViewAdaptor = new DBUS_Interface_WebViewAdaptor(pDBUS_Interface_WebView);
-
-    //DBUS_Interface_ScreenSaverAdaptor* cDBUS_Interface_ScreenSaverAdaptor = new DBUS_Interface_ScreenSaverAdaptor(pDBUS_Interface_ScreenSaver);
+    new DBUS_Interface_BrowserAdaptor(pDBUS_Interface_Browser);
+    new DBUS_Interface_WebViewAdaptor(pDBUS_Interface_WebView);
+    new DBUS_Interface_ScreenSaverAdaptor(pDBUS_Interface_ScreenSaver);
 
     // Connect to session bus
     #ifdef DBUS_USE_SYSTEMBUS
