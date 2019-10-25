@@ -14,10 +14,11 @@
 class Browser: public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(QString Version READ _r_Version )
 
 public:
     Browser(QObject *parent = nullptr);
-
+    QString _r_Version() const;
 public slots:
     void restart();
 };

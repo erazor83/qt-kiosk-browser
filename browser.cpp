@@ -22,6 +22,9 @@ void Browser::restart()
     else
         QProcess::startDetached("systemctl", QStringList() << "restart" << "qt-kiosk-browser");
 }
+QString Browser::_r_Version() const {
+    return QString(APP_VERSION);
+}
 
 BrowserOptions::BrowserOptions(QObject *parent): QObject(parent)
 {

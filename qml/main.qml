@@ -24,17 +24,20 @@ Window {
     signal urlChanged(string new_url)
 
     Component.onCompleted: {
+        console.log("App-Version: "+Browser.Version)
+
         var xhr = new XMLHttpRequest()
 
-        if (typeof browserOptions.configFile == "undefined") {
+        if (browserOptions.configFile == "") {
             browserOptions.configFile="settings.json"
         }
 
         console.log("Config file: "+browserOptions.configFile)
+        console.log("file://"+browserOptions.configFile)
         console.log("force URL: "+browserOptions.forceURL)
 
-        xhr.open("GET", "file:" + browserOptions.configFile);
-        if (typeof browserOptions.forceURL != "undfined") {
+        xhr.open("GET", "file://" + browserOptions.configFile);
+        if (browserOptions.forceURL != "") {
             webView.url = browserOptions.forceURL;
         }
         
@@ -42,7 +45,9 @@ Window {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 if (xhr.responseText.trim().length != 0) {
                     try {
+		    	console.log("Settings loaded.")
                         var settings = JSON.parse(xhr.responseText)
+			//console.log("settings: "+settings)
 
                         if (typeof settings["ScreenSaverTimeout"] != "undefined") {
                             screenSaverTimer.interval = parseInt(settings["ScreenSaverTimeout"])
