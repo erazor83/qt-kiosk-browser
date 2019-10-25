@@ -224,6 +224,7 @@ Window {
 
     InputEventHandler {
         onTriggered: {
+            console.error("input triggered, Timer restart")
             screenSaverTimer.restart()
             urlTimer.restart()
             jsTimer.restart()
@@ -275,7 +276,6 @@ Window {
             if (this.url) {
                 webView.url=this.url
             }
-           urlTimer.restart()
         }
 
         function start() {
@@ -303,7 +303,6 @@ Window {
                     }
                 )
             }
-           jsTimer.restart()
         }
 
         function start() {
