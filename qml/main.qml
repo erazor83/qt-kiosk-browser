@@ -28,15 +28,21 @@ Window {
 
         var xhr = new XMLHttpRequest()
 
+        console.log("== Options ==")
+        console.log("config = "+browserOptions.configFile)
+        console.log("URL = "+browserOptions.forceURL)
+        console.log("=============")
+
         if (browserOptions.configFile == "") {
-            browserOptions.configFile="settings.json"
+            var configFile="settings.json"
+        } else {
+            var configFile=browserOptions.configFile
         }
 
-        console.log("Config file: "+browserOptions.configFile)
-        console.log("file://"+browserOptions.configFile)
-        console.log("force URL: "+browserOptions.forceURL)
 
-        xhr.open("GET", "file://" + browserOptions.configFile);
+        console.log("Load file: " + configFile)
+        xhr.open("GET", configFile);
+
         if (browserOptions.forceURL != "") {
             webView.url = browserOptions.forceURL;
         }
@@ -45,9 +51,9 @@ Window {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 if (xhr.responseText.trim().length != 0) {
                     try {
-		    	console.log("Settings loaded.")
+                        console.log("Settings loaded.")
                         var settings = JSON.parse(xhr.responseText)
-			//console.log("settings: "+settings)
+                        //console.log("settings: "+settings)
 
                         if (typeof settings["ScreenSaverTimeout"] != "undefined") {
                             screenSaverTimer.interval = parseInt(settings["ScreenSaverTimeout"])
@@ -71,6 +77,9 @@ Window {
                             jsTimer.jsCommand = settings["JsTimeoutCmd"]
                         }
 
+                        if (typeof settings["RestartCmd"] != "undefined") {
+                            browserOptions.restartCommand = settings["RestartCmd"]
+                        }
 
                         if (browserOptions.forceURL != "") {
                             
@@ -98,6 +107,8 @@ Window {
 
                             webView.settings[key] = settings["WebEngineSettings"][key]
                         }
+                        
+                        Browser.options=browserOptions
                     } catch (e) {
                         console.error("Failed to parse settings file: " + e)
                     }

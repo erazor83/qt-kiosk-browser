@@ -8,26 +8,38 @@
 
 #include "browser.hpp"
 
+#include <QObject>
+#include <QVariant>
 #include <QProcess>
 #include <QFile>
 
-Browser::Browser(QObject *parent): QObject(parent)
-{
+Browser::Browser(QObject *parent): QObject(parent) {
 }
 
 void Browser::restart()
 {
-    if (QFile::exists("/etc/inittab"))
-        QProcess::startDetached("/etc/init.d/qt-kiosk-browser", QStringList() << "restart");
-    else
-        QProcess::startDetached("systemctl", QStringList() << "restart" << "qt-kiosk-browser");
+    qDebug("calling restart");
+    if (options != nullptr) {
+        QString restartCommand=this->options->property("restartCommand").toString();
+        QStringList cmd_split=restartCommand.split(' ');
+        QStringList cmd_options;
+        for(int i=1; i < cmd_split.size();++i) {
+            cmd_options.append(cmd_split[i]);
+         }
+         qDebug("startDetached");
+         QProcess::startDetached(cmd_split[0], cmd_options);
+    } else {
+         qDebug("No browser options!");
+    }
 }
 QString Browser::_r_Version() const {
     return QString(APP_VERSION);
 }
+void Browser::_w_Options(QObject* opts) {
+    this->options=opts; 
+}
 
-BrowserOptions::BrowserOptions(QObject *parent): QObject(parent)
-{
+BrowserOptions::BrowserOptions(void){
 }
 
 QString BrowserOptions::_r_configFile() const {
@@ -36,4 +48,12 @@ QString BrowserOptions::_r_configFile() const {
     
 QString BrowserOptions::_r_forceURL() const {
     return forceURL;
+}
+
+QString BrowserOptions::_r_restartCommand() const {
+    return restartCommand;
+}
+
+void BrowserOptions::_w_restartCommand(QString cmd) {
+    restartCommand=QString(cmd);
 }

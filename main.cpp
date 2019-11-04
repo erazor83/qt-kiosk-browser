@@ -62,14 +62,16 @@ int main(int argc, char *argv[])
 
     QtWebEngine::initialize();
 
-    qmlRegisterSingletonType<InputEventHandler>("Browser", 1, 1, "Browser", [](QQmlEngine *, QJSEngine *) -> QObject * {
-        return new Browser();
-    });
+    BrowserOptions browserOptions;
+
+    qmlRegisterSingletonType<InputEventHandler>(
+        "Browser", 1, 1, "Browser", [](QQmlEngine *, QJSEngine *) -> QObject * {
+          return new Browser();
+        }
+    );
     qmlRegisterType<InputEventHandler>("Browser", 1, 0, "InputEventHandler");
 
     QQmlApplicationEngine engine;
-
-    BrowserOptions browserOptions;
 
 
     if (arg_parser.isSet(configOption)) {
@@ -82,11 +84,12 @@ int main(int argc, char *argv[])
 
     //qDebug("browserOptions.forceURL "+browserOptions.forceURL.toLatin1());
     engine.rootContext()->setContextProperty("browserOptions", &browserOptions);
-		
+
     engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
     if (engine.rootObjects().isEmpty())
         return -1;
-    
+
+
 #ifdef ENABLE_DBUS
     DBUS_Interface_Browser*  pDBUS_Interface_Browser = new DBUS_Interface_Browser(&engine);
     DBUS_Interface_WebView*  pDBUS_Interface_WebView = new DBUS_Interface_WebView(&engine);

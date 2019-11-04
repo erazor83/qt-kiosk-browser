@@ -1,6 +1,6 @@
 TEMPLATE = app
 
-DEFINES += APP_VERSION=\\\"1.2\\\"
+DEFINES += APP_VERSION=\\\"1.3\\\"
 
 QT += qml quick core gui webengine webenginewidgets
 
