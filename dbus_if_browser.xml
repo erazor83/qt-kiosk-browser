@@ -5,5 +5,7 @@
     <method name="getVersion">
       <arg type="s" direction="out"/>
     </method>
+    <method name="restart">
+    </method>
   </interface>
 </node>
