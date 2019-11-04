@@ -17,3 +17,8 @@ QString DBUS_Interface_Browser::getVersion(void)
 {
     return QString(APP_VERSION);
 }
+
+void DBUS_Interface_Browser::restart(void)
+{
+    QMetaObject::invokeMethod(browser,"restart");
+}

@@ -23,6 +23,7 @@ public:
 
 public slots:
     QString getVersion();
+    void restart();
 
 private:
     QObject *browser;
