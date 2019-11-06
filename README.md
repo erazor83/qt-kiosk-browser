@@ -40,6 +40,10 @@ Enter in screen saving mode after X milliseconds (0 to disable).
 
 Defaults to 20 minutes.
 
+#### RestartCmd
+
+Shell command to restart the browser. Called via RestartTimeout.
+
 #### RestartTimeout
 
 After entering in screen saving mode, restart browser after X milliseconds (0 to disable).
@@ -65,6 +69,7 @@ Example:
 ```json
 {
     "ScreenSaverTimeout": 10000,
+    "RestartCmd":         2000,
     "RestartTimeout":     2000,
     "UrlTimeout":         10000,
     "UrlTimeoutUrl":      "http://google.de",
