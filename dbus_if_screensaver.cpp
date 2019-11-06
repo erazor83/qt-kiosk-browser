@@ -6,9 +6,10 @@
  * SPDX-License-Identifier:     GPL-3.0
  */
 
+#include "browser.hpp"
 #include "dbus_if_screensaver.h"
 
-DBUS_Interface_ScreenSaver::DBUS_Interface_ScreenSaver(QQmlApplicationEngine *qml_engine)
+DBUS_Interface_ScreenSaver::DBUS_Interface_ScreenSaver(QQmlApplicationEngine *qml_engine, Browser* browser)
 {
     screenSaverTimer = qml_engine->rootObjects().at(0)->findChild<QObject*>("screenSaverTimer");
     screenSaver = qml_engine->rootObjects().at(0)->findChild<QObject*>("screenSaver");

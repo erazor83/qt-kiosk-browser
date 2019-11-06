@@ -13,13 +13,15 @@
 #include <QQmlApplicationEngine>
 #include <QQmlProperty>
 
+#include "browser.hpp"
+
 class DBUS_Interface_WebView : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString URL READ getURL WRITE setURL )
  
 public:
-    DBUS_Interface_WebView(QQmlApplicationEngine *qml_engine = nullptr);
+    DBUS_Interface_WebView(QQmlApplicationEngine *qml_engine = nullptr, Browser* browser  = nullptr);
 		
     QString getURL() const;
     void setURL(QString);

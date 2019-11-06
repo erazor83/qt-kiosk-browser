@@ -12,7 +12,9 @@
 #include <QVariant>
 #include <QProcess>
 #include <QFile>
+#include <QQmlEngine>
 
+Browser* Browser::m_pThis = nullptr;
 Browser::Browser(QObject *parent): QObject(parent) {
 }
 
@@ -32,11 +34,25 @@ void Browser::restart()
          qDebug("No browser options!");
     }
 }
-QString Browser::_r_Version() const {
+QString Browser::getVersion() const {
     return QString(APP_VERSION);
 }
 void Browser::_w_Options(QObject* opts) {
     this->options=opts; 
+}
+
+Browser *Browser::instance()
+{
+    if (m_pThis == nullptr) // avoid creation of new instances
+        m_pThis = new Browser;
+    return m_pThis;
+}
+
+QObject *Browser::qmlInstance(QQmlEngine *engine, QJSEngine *scriptEngine) {
+    Q_UNUSED(engine);
+    Q_UNUSED(scriptEngine);
+    // C++ and QML instance they are the same instance
+    return Browser::instance();
 }
 
 BrowserOptions::BrowserOptions(void){

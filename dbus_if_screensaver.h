@@ -12,14 +12,16 @@
 #include <QObject>
 #include <QQmlApplicationEngine>
 #include <QQmlProperty>
- 
+
+#include "browser.hpp"
+
 class DBUS_Interface_ScreenSaver : public QQmlApplicationEngine
 {
     Q_OBJECT
     Q_PROPERTY(bool visible READ getVisible WRITE setVisible)
  
 public:
-    DBUS_Interface_ScreenSaver(QQmlApplicationEngine *qml_engine = nullptr);
+    DBUS_Interface_ScreenSaver(QQmlApplicationEngine *qml_engine = nullptr, Browser* browser  = nullptr);
 
     bool getVisible() const;
     void setVisible(bool);

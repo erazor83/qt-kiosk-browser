@@ -13,20 +13,22 @@
 #include <QQmlApplicationEngine>
 #include <QQmlProperty>
 
+#include "browser.hpp"
+
 class DBUS_Interface_Browser : public QObject
 {
     Q_OBJECT
-     Q_PROPERTY(QString Version READ getVersion )
+    Q_PROPERTY(QString Version READ getVersion )
 
 public:
-    DBUS_Interface_Browser(QQmlApplicationEngine *qml_engine = nullptr);
+    DBUS_Interface_Browser(QQmlApplicationEngine *qml_engine = nullptr, Browser* browser  = nullptr);
 
 public slots:
     QString getVersion();
     void restart();
 
 private:
-    QObject *browser;
+    Browser *browser;
 };
 
 #endif // DBUS_IF_BROWSER_H

@@ -22,7 +22,7 @@ Window {
     
     signal ssChanged(bool on_off)
     signal urlChanged(string new_url)
-
+    
     Component.onCompleted: {
         console.log("App-Version: "+Browser.Version)
 

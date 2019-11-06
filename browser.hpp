@@ -12,6 +12,9 @@
 #include <QObject>
 
 
+class QQmlEngine;
+class QJSEngine;
+
 class BrowserOptions : public QObject
 {
     Q_OBJECT
@@ -31,12 +34,13 @@ public:
 
     void _w_restartCommand(QString);
     QString _r_restartCommand() const;
+
 };
 
 class Browser: public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString Version READ _r_Version )
+    Q_PROPERTY(QString Version READ getVersion )
     Q_PROPERTY(QObject* options WRITE _w_Options )
 
 public:
@@ -44,9 +48,16 @@ public:
     Browser(QObject *parent = nullptr);
     QObject *options;
     QObject *parent;
-    QString _r_Version() const;
     void _w_Options(QObject*);
+
+    static Browser *instance();
+    static QObject *qmlInstance(QQmlEngine *, QJSEngine *);
+
+private:
+    static Browser* m_pThis;
+
 public slots:
     void restart();
+    QString getVersion() const;
 };
 #endif // BROWSER_HPP

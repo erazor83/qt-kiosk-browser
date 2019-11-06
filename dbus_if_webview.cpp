@@ -6,9 +6,10 @@
  * SPDX-License-Identifier:     GPL-3.0
  */
 
+#include "browser.hpp"
 #include "dbus_if_webview.h"
 
-DBUS_Interface_WebView::DBUS_Interface_WebView(QQmlApplicationEngine *qml_engine)
+DBUS_Interface_WebView::DBUS_Interface_WebView(QQmlApplicationEngine *qml_engine, Browser* browser)
 {
     webView = qml_engine->rootObjects().at(0)->findChild<QObject*>("webView");
     if (!webView) {
