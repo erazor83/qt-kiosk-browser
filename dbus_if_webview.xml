@@ -11,5 +11,8 @@
     </method>
     <method name="reload">
     </method>
+    <method name="navigate">
+      <arg type="s" direction="in"/>
+    </method>
   </interface>
 </node>

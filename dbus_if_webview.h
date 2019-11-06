@@ -31,6 +31,7 @@ public slots:
     void goForward();
     void goBack();
     void reload();
+    void navigate(QString);
  
 private:
     QObject *webView;

@@ -23,7 +23,12 @@ QString DBUS_Interface_WebView::getURL() const
     //qDebug("Response: "+response.toLatin1());
     return response;
 }
- 
+
+void DBUS_Interface_WebView::navigate(QString url)
+{
+    this->setURL(url);
+}
+
 void DBUS_Interface_WebView::setURL(QString url)
 {
     qDebug("D-BUS: setURL()");
