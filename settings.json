@@ -1,0 +1,9 @@
+{
+	"ignoreInvalidSSL":    true,
+	"URL":						"http://google.de",
+	"RestartCmd":			"echo 123456",
+	"UrlTimeout":			"60000",
+	"UrlTimeoutUrl":	"https://192.168.42.202/",
+	"_JsTimeout":			"5000",
+	"_JsTimeoutCmd":		"window.history.back()"
+}
