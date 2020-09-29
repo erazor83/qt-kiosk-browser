@@ -12,6 +12,11 @@ Below is a screenshot of it showing the Qt website:
     <img align="center" src="screenshot.png" height="480px"/>
 </p>
 
+## IMPORTANT
+With newer QT-versions (I noticed this behavior in qt>5.14) you have to use absolute filenames and the "file://" prefix for config and other file-locations.
+
+You can use the QML_XHR_DUMP=1 environment variable to debug this.
+
 ## Features
 Enable runtime feature when calling qmake:
 
@@ -58,6 +63,10 @@ Navigate to URL UrlTimeoutUrl after UrlTimeout milliseconds of inactivity (disab
 
 Call Javascript-code JsTimeoutCmd after JsTimeout milliseconds of inactivity (disabled by default).
 
+#### JsOnPageLoadCmd & JsOnPageLoadCmdFile
+
+Call Javascript-code JsOnPageLoadCmd after ANY page has been loaded (disabled by default). This is usefull for some auto-login feature. Alternatively you can use JsOnPageLoadCmdFile to use a javascript file.
+
 #### WebEngineSettings
 
 Configure browser properties and generic attributes, such as JavaScript support, focus behavior, and access to remote content.
@@ -68,14 +77,16 @@ Example:
 
 ```json
 {
-    "ScreenSaverTimeout": 10000,
-    "RestartCmd":         2000,
-    "RestartTimeout":     2000,
-    "UrlTimeout":         10000,
-    "UrlTimeoutUrl":      "http://google.de",
-    "JsTimeout":          "5000",
-    "JsTimeoutCmd":       "window.history.back()",
-    "ignoreInvalidSSL":    true,
+    "ScreenSaverTimeout":   10000,
+    "RestartCmd":           2000,
+    "RestartTimeout":       2000,
+    "UrlTimeout":           10000,
+    "UrlTimeoutUrl":        "http://google.de",
+    "JsTimeout":            "5000",
+    "JsTimeoutCmd":         "window.history.back()",
+    "ignoreInvalidSSL":     true,
+    "JsOnPageLoadCmd":      "document.body.style.backgroundColor = \"red\";",
+    "JsOnPageLoadCmdFile":  "file:///home/erazor/git/qt-kiosk-browser/on-loaded.js",
 
     "WebEngineSettings": {
         "javascriptEnabled": false
